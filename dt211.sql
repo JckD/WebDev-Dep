@@ -76,7 +76,7 @@ CREATE TABLE `orders` (
 CREATE TABLE `user` (
   `username` varchar(10) NOT NULL,
   `password1` varchar(20) NOT NULL,
-  `addr` varchar(30) NOT NULL,
+  `address` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

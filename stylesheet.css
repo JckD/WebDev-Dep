@@ -1,20 +1,14 @@
-ul {
-	list-style-type:none;
-	margin:0;
-	padding:0;
-	overflow:hidden;
+navbar-custom {
 	background-color: #303030;
 }
 
 .header {
-	/*position:fixed;*/
 	left:0;
 	top:9;
 	width:100%;
 }
 
 .footer {
-	/*position:fixed;*/
 	left:0;
 	bottom:0;
 	width:100%;
@@ -33,22 +27,12 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
-	color:#303030;
-    background-color: lightblue;
-}
-
-.active {
-	color:#303030;
-    background-color: lightblue;
-}
-
 h1 {
     display:block;
     color:lightblue;
     text-align: center;
     font-family:"Brush Script MT", cursive;
-    font-size:350%;
+    font-size:400%;
 
 }
 
@@ -57,61 +41,3 @@ h2 {
     color:dimgrey;
     font-size:160%;
 }
-
-.search-container {
-  
-}
-
-/* Style the search box */
-input[type=text] {
-    float: middle;
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    font-size: 17px;
-    border-color:#303030;
-}
-
-/* Add submit button */
-.search-container button {
-  float: middle;
-  padding: 6px;
-  margin-top: 8px;
-  margin-right: 16px;
-  background: #303030;
-  font-size: 17px;
-  color:white;
-  border: #303030;
-  cursor: pointer;
-}
-
-.search-container button:hover {
-  background:black;
-}
-
-table tr,th,td {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 20px;
-    border-collapse: collapse;
-    border: 1px solid black;
-    
-}
-
-
-
-/* When the screen is less than 600px 
-@media screen and (max-width: 600px) {
-    a, input[type=text], .search-container button {
-        float: none;
-        display: block;
-        text-align: left;
-        width: 100%;
-        margin: 0;
-        padding: 14px;
-    }
-    input[type=text] {
-        border: 1px solid #ccc;
-    }
-}
-*/

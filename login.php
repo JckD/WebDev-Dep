@@ -7,32 +7,63 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
       
       // username and password sent from form 
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
+      $username = mysqli_real_escape_string($db,$_POST['username']);
+      $password = mysqli_real_escape_string($db,$_POST['password']); 
       
-      $sql = "SELECT email FROM user WHERE username = '$myusername' and password = '$mypassword'";
+      $sql = "SELECT email FROM user WHERE username = '$username' and password = '$password'";
       $result = mysqli_query($db,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       $active = $row['active'];
-      
       $count = mysqli_num_rows($result);
       
       // If result matched $myusername and $mypassword, table row must be 1 row
       if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
+      	session_register("username");
+        $_SESSION['login_user'] = $username;
          
-         header("location: bookshophome.php");
+        header("location: index.php");
       }
       else {
-         $error = "Error logging in. Make sure your username and password are correct.";
-      }//end if/else
+      	header( 'location: '.htmlspecialchars($_SERVER['PHP_SELF']));
+      	$form['username'] = $form['password'] =  '';
+      	$error = "Error. Please re-enter your loggin details.";
+      }
   }//end if
 ?>
 
-<html>
+<script>
+	function checkForm(){
+		//Ensure username field isn't empty
+		var username = document.getElementById("username");
+		if(username == null || usrname == ""){
+			alert("Please enter your Username");
+			return false;
+		}
+
+		//ensure password was entered
+		var password = document.getElementById("password");
+		if(password == null || password == ""){
+			alert("Please enter your Password");
+			return false;
+		}
+	}//end checkForm()
+</script>
+
+<html lang="en">
 <head>
-	<link rel="Stylesheet" type="text/css" href="stylesheet.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="Stylesheet" type="text/css" href="stylesheet.css"/>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <title> The Book Shop </title>
@@ -40,41 +71,40 @@
 
 <body>
 	<!-- Header - to navigate the site -->
-	<ul class="header">
-		<li><a href="bookshophome.php">Home</a></li>
-		<li style="float:right"><a href="logout.php">Logout</a></li>
-		<li style="float:right"><a class="active" href="login.php">Login</a></li>	
-	</ul>
+	<nav class="navbar navbar-inverse navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="index.php"> Home </a>
+				<a class="navbar-brand" href="products.php">Books</a>
+				<a style="float:right" class="navbar-brand" href="logout.php"> Logout </a>
+				<a style="float:right" class="navbar-brand" href="login.php"> Log In </a>
+			</div>
+		</div>
+		<!-- Library Image -->
+		<img style="height:20%;width:100%" src="library2crop.jpg"/>
+	</nav>
 
-	<!-- Library Image -->
-	<img style="height:20%;width:100%" src="library2crop.jpg"/>
+	<div class="container" style="width:50%">
+		<h2> Log In </h2>
+		<form style="padding-left:5%" action="login.php" method="post" onsubmit="return checkForm();">
+			<div class="form-group">
+				<label for="username"> Username: </label>
+				<input type="text" class="form-control" placeholder="Enter Username" name="username" id="username" required>
+			</div>
 
-	<h2> Log In </h2>
+			<div class="form-group">
+				<label for="password"> Password: </label>
+				<input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+			</div>
 
-	<form action="" method="post">
-		<label for="username"><b> Username: </b></label>
-		<input type="text" placeholder="Enter your Username" name="username" required>
+			<br>
+			<button type="submit" class="btn btn-dark" href="login.php"> Login </button>
 
-		<label for="password"><b> Password: </b></label>
-		<input type="password" placeholder="Enter your Password" name="password" required>
-
-		<button type="submit"> Login </button>
-
-		<p>
-			Don't have an account yet? <a href="register.php"> Register! </a>
-		</p>
-	</form>
-
-	<!-- Error Message -->
-	<p style="color:red"><?php echo $error; ?></p>
-
-	<!-- Footer -->
-	<br/>
-	<ul class="footer" style="padding-left:5%">
-		<p style="color:white">
-			Address: 146 Allamy Street <br/>
-			Contact Us: 01 2108 9952 <br/>
-		</p>
-	</ul>
+			<p>
+			<br/>
+				Don't have an account yet? <a href="register.php"> Sign Up! </a>
+			</p>
+		</form>
+	</div>
 </body>
 </html>

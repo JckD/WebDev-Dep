@@ -2,11 +2,9 @@
 
 <?php
 	include("config.php");
-session_start();
+	session_start();
 
-$errors = array();
-
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+	$errors = array();
 
 	if(mysqli_connect_errno()){
 
@@ -15,98 +13,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$username = mysqli_real_escape_string($db, $_POST['username']);
 	$email = mysqli_real_escape_string($db, $_POST['email']);
-	$address1 = mysqli_real_escape_string($db, $_POST['address1']);
-	$address2 = mysqli_real_escape_string($db, $_POST['address2']);
 	$password1 = mysqli_real_escape_string($db, $_POST['password1']);
 	$password2 = mysqli_real_escape_string($db, $_POST['password2']);
 
-	//if any fields are empty
-	if (empty($username)) {
-		array_push($errors,"Username is required");
-	}
-	if(empty($email)){
-		array_push($errors, "E-mail is required");
-	}
-	if(empty($address1)){
-		array_push($errors, "Shipping Address is required");
-	}
-	if(empty($password1)){
-		array_push($errors, "Password is required");
-	}
-	if(empty($password2)){
-		array_push($errors,"Confirm Password");
+	if (empty($username) || empty($email) || empty($password1) || empty($password2)) {
+		$errors = errors + 1;
+	    header('location: registererrorpage.php');
 	}
 
-	//if passwords do not match
 	if ($password1 != $password2) {
-		array_push($errors, "Passwords do not match");
+		echo("The two passwords do not match.");
+		$errors = errors + 1;
+		header('location: registererrorpage.php');
 	 }
-
-	 print_r($errors);
 
 	//if there are no errors found, the user is added to the database and registered
-	if (!$errors) {
-		//concatonate address line 1 with address line 2
-		$address = $address1.$address2;
+	if (count($errors) == 0) {
+	  	$sql = "INSERT INTO user (username, email, password) VALUES ('$username','$email','$password1')";
+	  	mysqli_query($db, $sql);
 
-		$sql = "INSERT INTO user (username, email, address, password) VALUES ('$username','$email', '$address', $password1')";
-		mysqli_query($db, $sql);
-
-		$_SESSION['username'] = $username;
-		$_SESSION['success'] = "Login Successful.";
-		header('location: index.php');
+	  	$_SESSION['username'] = $username;
+	  	$_SESSION['success'] = "Login Successful.";
+	  	header('location: bookshophome.php');
 	 }
-	 header( 'location: '.htmlspecialchars($_SERVER['PHP_SELF']));
-}
-else{
-	$form['username'] = $form['email'] = $form['address1'] = $form['address2'] = $form['password1'] = $form['password2'] = '';
-}
 ?>
-
-<script>
-	function checkForm(){
-		//Ensure username field isn't empty
-		var username = document.getElementById("username");
-		if(username == null || username == ""){
-			alert("Please enter a Username");
-			return false;
-		}
-
-		//ensure email field isn't empty
-		var email = document.getElementById("email");
-		if(email == null || email == ""){
-			alert("Please enter an Email Address");
-			return false;
-		}
-
-		//ensure the first address field is not empty
-		var address1 = document.getElementById("address1");
-		if(address1 == null || address1 == ""){
-			alert("Please enter a Shipping Address");
-			return false;
-		}
-
-		//ensure password was entered
-		var password1 = document.getElementById("password1");
-		var password2 = document.getElementById("password2");
-		if(password1 == null || password1 == ""){
-			alert("Please enter a Password");
-			return false;
-		}
-
-		//ensure password was confirmed
-		if(password2 == null || password2 == ""){
-			alert("Plese confirm your Password");
-			return false;
-		}
-
-		//ensure passwords match
-		if(!password1.equals(password2)){
-			alert("Passwords do not match");
-			return false;
-		}
-	}//end checkForm()
-</script>
 
 <html lang="en">
 <head>
@@ -134,14 +64,14 @@ else{
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="index.php"> Home </a>
-				<a class="navbar-brand" href="products.php">Books</a>
 				<a style="float:right" class="navbar-brand" href="logout.php"> Logout </a>
 				<a style="float:right" class="navbar-brand" href="login.php"> Log In </a>
 			</div>
 		</div>
-		<!-- Library Image -->
-		<img style="height:20%;width:100%" src="library2crop.jpg"/>
 	</nav>
+
+	<!-- Library Image -->
+	<img style="height:20%;width:100%" src="library2crop.jpg"/>
 
 	<div class="container" style="width:50%">
 	<h2> Create an Account </h2>
@@ -180,5 +110,14 @@ else{
 		<button type="submit" class="btn btn-dark" name="submit" id="submit"> Create My Account </button>
 	</form>
 </div>
+
+<!-- Footer -->
+<br/>
+<ul class="footer container-fluid text-center">
+	<p style="color:white">
+		Address: 146 Allamy Street <br/>
+		Contact Us: 01 2108 9952 <br/>
+	</p>
+</ul>
 </body>
 </html>
