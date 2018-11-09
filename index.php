@@ -23,21 +23,32 @@
 
 
 <title> The Book Shop </title>
-<h1 style="float:middle;"> The Book Shop <?php //echo $login_session; ?></h1>
+
 
 <body>
-	<!-- Header - to navigate the site -->
-	<nav class="navbar navbar-inverse navbar-custom">
+     <h1> The Book Shop </h1>
+    	<!-- Header - to navigate the site -->
+	<nav class="navbar navbar-inverse navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="index.php"> Home </a>
-				<a class="navbar-brand" href="products.php">Books</a>
-				<a style="float:right" class="navbar-brand" href="logout.php"> Logout </a>
-				<a style="float:right" class="navbar-brand" href="login.php"> Log In </a>
-			</div>
-		</div>
+			<ul class="nav navbar-nav">
+                <li><a href="index.php"> Home </a></li>
+                <li><a href="products.php">Books</a></li>
+            </ul>
+                
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active dropdown">
+                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="profile.php"> My Profile </a></li>
+                        <li><a href="login.php"> Log In</a></li>
+                        <li><a href="logout.php"> Logout </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+            
 		<!-- Library Image -->
-		<img style="height:20%;width:100%" src="library2.jpg" alt="Our Store"/>
+		<img style="height:20%;width:100%" src="library2crop.jpg" alt="Our Store"/>
 	</nav>
 
 	<div style="padding-left:3%">
@@ -54,8 +65,9 @@
 	                   name = "search" 
 	                   placeholder="Search for a book..."/>
 				<button type="submit" class="btn btn-dark" href = "searchResults.php"> Search </button>
-		</form>
-
+            </div>
+        </form>
+        
 		<br/>
 	</div>
 

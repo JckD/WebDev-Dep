@@ -1,12 +1,7 @@
-navbar-custom {
+.navbar-custom {
 	background-color: #303030;
 }
 
-.header {
-	left:0;
-	top:9;
-	width:100%;
-}
 
 .footer {
 	left:0;
@@ -14,29 +9,18 @@ navbar-custom {
 	width:100%;
 }
 
-li {
-	float:left;
-}
-
-li a {
-    display: block;
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-h1 {
-    display:block;
-    color:lightblue;
-    text-align: center;
-    font-family:"Brush Script MT", cursive;
-    font-size:400%;
+.html{
+    
+    height: 100%;
+    font-size: 150px;
 
 }
 
-h2 {
+.body{
+    
+    height: 100%;
+}
+.h2 {
     display:block;
     color:dimgrey;
     font-size:160%;

@@ -4,7 +4,7 @@
     //include('session.php');
 ?>
 
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,62 +67,47 @@
             </form>
         </div>
         
-        <div style=" width: 75%; display: block; margin-left:12%"> 
+    
+    <div style=" padding-bottom:50%;">
+        
+         <div style="float: left; width: 40%; text-align: center; padding-top: 30px">
+            <img style="width: 60%; margin-left: 20%" src="Detective%20Comics%2027.jpg">
+        </div><!--end cover div-->
 
-            <table class="table table-hover" style = "margin-top:20px;
-                                         text-align: center;
-                                         font-size: 20px;
-                                         width: 100%">
-    
+        <div style="float: left; width: 40%">
             
-        <?php 
-        
-            //connect to database
-            $con = mysqli_connect("localhost","root","","dt211");
-    
-            //check connection
-            if(mysqli_connect_errno())
-            {
-                echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
-            }
-    
-            $sql = "SELECT * FROM books";
-    
-            $result = $con->query($sql);
-    
-            if ($result->num_rows > 0)
-            {
+            <div>
+                <h2>Detective Comics #27</h2>
+                <h4>E.C Stoner</h4>
+            </div><!-- end title div-->
             
-                echo       '<tr>';
-                echo            '<th scope="col" style="width: 25">Cover</th>';
-                echo            '<th scope="col" style="width: 30%;">Title</th>';
-                echo            '<th scope="col" style="width: 30%; ">Author</th>';
-                echo            '<th scope="col" style="width: 30%; ">Price</th>';
-                echo        '</tr>';
+            <div>
+                Detective Comics Issue number 27. The First Appearance of Batman
+            </div><!-- end discription div-->
+            
+            <div>
+                <h2>$1,000,000</h2>
+            </div><!-- end price div-->
+            
+            <div class="search-container">
+                <form action="" method="">
+                    
+                    <button type="submit">Add To Basket</button>
+                </form>
+            </div><!-- end order div-->
+            
+        </div><!-- end info div-->
         
-                while($row = $result->fetch_assoc())
-                {
-                    echo "<tr>
-                            <td style='text-align: center; vertical-align: middle'>
-                            <a href='"."$row[title]".".html'><img style='width:100%' src='"."$row[title]".".jpg'
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>"."$row[title]". "
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>"."$row[author]"."
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>$"."$row[price]"."
-                            </td>
-                        </tr>";
-                }
-            }
+    </div><!--end product display div-->
+
+	<!-- Footer -->
+	<br/>
+	<ul class="footer" style="padding-left:5%">
+		<p style="color:white">
+			Address: 146 Allamy Street <br/>
+			Contact Us: 01 2108 9952 <br/>
+		</p>
+	</ul>
     
-        ?>
-    
-        </table>
-    </div>
-	   <br/>
-    </body>
+</body>
 </html>
