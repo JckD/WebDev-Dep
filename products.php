@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 
 <?php 
-    //include('session.php');
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
 ?>
 
 <html lang="en">
@@ -20,25 +24,24 @@
     <!-- JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-    
 
 <title> The Book Shop </title>
-<?php //echo $login_session; ?>
 
 <body>
     
     <h1> The Book Shop </h1>
-    	<!-- Header - to navigate the site -->
+    
+	<!-- Header - to navigate the site -->
 	<nav class="navbar navbar-inverse navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
                 <li><a href="index.php"> Home </a></li>
-                <li><a href="products.php">Books</a></li>
+                <li class="active"><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active dropdown">
-                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
                         <li><a href="login.php"> Log In</a></li>
@@ -52,9 +55,7 @@
 		<img style="height:20%;width:100%" src="library2crop.jpg"/>
 	</nav>
 
-
-
-        <div style="padding: 0%; margin-left: 12%">
+    <div style="padding: 0%; margin-left: 12%">
         	<!-- Search Bar -->
             	<form action="searchResults.php" class="form-inline justify-content-center" method="post">
                     <div class="form-group">
@@ -64,7 +65,7 @@
                                placeholder="Something else...?"/>
                         <button type="submit" class="btn btn-dark" href = "searchResults.php"> Search </button>
                     </div>
-            </form>
+                </form>
         </div>
         
         <div style=" width: 75%; display: block; margin-left:12%"> 

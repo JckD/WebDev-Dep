@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 
 <?php 
-    //include('session.php');
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
 ?>
 
 <html lang="en">
@@ -24,20 +28,21 @@
 
 <title> The Book Shop </title>
 
-
-<body>
-     <h1> The Book Shop </h1>
-    	<!-- Header - to navigate the site -->
+<body >
+    
+    <h1> The Book Shop </h1>
+    
+	<!-- Header - to navigate the site -->
 	<nav class="navbar navbar-inverse navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
-                <li><a href="index.php"> Home </a></li>
+                <li class="active"><a href="index.php"> Home </a></li>
                 <li><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active dropdown">
-                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
                         <li><a href="login.php"> Log In</a></li>
@@ -48,9 +53,9 @@
         </div>
             
 		<!-- Library Image -->
-		<img style="height:20%;width:100%" src="library2crop.jpg" alt="Our Store"/>
+		<img style="height:20%;width:100%" src="library2crop.jpg"/>
 	</nav>
-
+    
 	<div style="padding-left:3%">
 		<h2>Welcome!</h2>
 		<p>
@@ -63,24 +68,21 @@
 				<input type="text" 
 					   class="form-control"
 	                   name = "search" 
-	                   placeholder="Search for a book..."/>
+	                   placeholder="Search for a something..."/>
 				<button type="submit" class="btn btn-dark" href = "searchResults.php"> Search </button>
             </div>
-        </form>
-        
+		</form>
+
 		<br/>
 	</div>
 
-
 	<!-- Footer -->
 	<br/>
-	<footer class="section footer-classic elegant-dark text-center" style="background-color: #303030">
-		<div class="container-fluid">
-			<p style="color:white">
-				Address: 146 Allamy Street <br/>
-				Contact Us: 01 2108 9952 <br/>
-			</p>
-		</div>
-	</footer>
+	<div class="footer elegant-dark">
+		<p style="color:white">
+            Address: 146 Allamy Street <br/>
+			Contact Us: 01 2108 9952 <br/>
+        </p>
+    </div>
 </body>
 </html>

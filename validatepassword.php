@@ -18,33 +18,35 @@
         if(isset($_POST["submit"])){
             
             //if any fields are empty
-            if (empty($_POST["username"])) {
-                array_push($errors,"*Username is required.");
+            if (empty($_POST["password1"])) {
+                array_push($errors,"*Password is required.");
             }
-            if(empty($_POST["password"])){
+            if(empty($_POST["password2"])){
                 array_push($errors, "*Password is required.");
             }
+            //if passwords do not match
+            if ($_POST["password1"] != $_POST["password2"]) {
+                array_push($errors, "*Passwords do not match.");
+             }
             
             if(!$errors){
                 // username and password sent from form 
-                $username = $_POST["username"];
-                $password = $_POST["password"];
+                $password1 = $_POST["password1"];
+                $password2 = $_POST["password2"];
+                
+                $session = $_SESSION["user"];
 
-                //set username as session variable
-                $_SESSION["user"] = $username;
-
-                $sql = "SELECT username FROM user WHERE username = '$username' and password = '$password'";
+                $sql = "SELECT password FROM user WHERE username = '$session' and password = '$password1'";
 
                 $result = $con->query($sql);
 
                 // If result matched $myusername and $mypassword, table row must be 1 row
                 if($result->num_rows == 1) {
-                    echo("Logged In as: " . $_SESSION["user"]);
-                    header("Location: profile.php");
+                    header("Location: http://localhost/WebDev-Dep-master/editprofile.php");
                 }
                 else {
-                    $form["username"] = $form["password"] =  '';
-                    array_push($errors, "*Invalid Login Details.");
+                    //$form["password1"] = $form["password2"] =  '';
+                    array_push($errors, "*Error, re-Confirm your Password.");
                 }
             }
         }    
@@ -54,15 +56,15 @@
 <script>
 	function checkForm(){
 		//Ensure username field isn't empty
-		var username = document.getElementById("username");
-		if(username == null || username == ""){
-			alert("Please enter your Username.");
+		var password1 = document.getElementById("password1");
+		if(password1 == null || password1 == ""){
+			alert("Please enter your Password.");
 			return false;
 		}
 
 		//ensure password was entered
-		var password = document.getElementById("password");
-		if(password == null || password == ""){
+		var password2 = document.getElementById("password2");
+		if(password2 == null || password2 == ""){
 			alert("Please enter your Password.");
 			return false;
 		}
@@ -105,7 +107,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
-                        <li class="active"><a href="login.php"> Log In</a></li>
+                        <li class="active"><a href="validatepassword.php"> Edit Profile </a></li>
+                        <li><a href="login.php"> Log In</a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </li>
@@ -125,26 +128,21 @@
             }
         ?>
         
-		<h2> Log In </h2>
+		<h2> Please Confirm your Password to Change your Details </h2>
 		<form style="padding-left:5%" action="login.php" method="post" onsubmit="return checkForm();">
 			<div class="form-group">
-				<label for="username"> Username: </label>
-				<input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" required>
-			</div>
+                <label for="password1"> Password: </label>
+                <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" required>
+            </div>
 
-			<div class="form-group">
-				<label for="password"> Password: </label>
-				<input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required>
-			</div>
+            <div class="form-group">
+                <label for="password2"> Confirm Password: </label>
+                <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
+            </div>
 
 			<br>
-			<button type="submit" class="btn btn-dark" name="submit"> Login </button>
-            
+			<button type="submit" class="btn btn-dark" name="submit"> Confirm </button>
             <br>
-            <br>
-			<p>
-				Don't have an account yet? <a href="register.php"> Sign Up! </a>
-			</p>
 		</form>
 	</div>
     </body>

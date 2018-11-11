@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 
 <?php 
-    //include('session.php');
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
 ?>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -168,12 +173,5 @@
     </div>
 
 <br/>
-	<ul class="footer" style="padding-left:5%">
-		<p style="color:white">
-			Address: 146 Allamy Street <br/>
-			Contact Us: 01 2108 9952 <br/>
-		</p>
-	</ul>
 </body>
-    
 </html>

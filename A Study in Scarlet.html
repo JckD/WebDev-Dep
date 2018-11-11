@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 
 <?php 
-    //include('session.php');
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
 ?>
 
 <html>
@@ -23,21 +27,20 @@
     
 
 <title> The Book Shop </title>
-<?php //echo $login_session; ?>
 
 <body>
     
     <h1> The Book Shop </h1>
-    	<!-- Header - to navigate the site -->
+    <!-- Header - to navigate the site -->
 	<nav class="navbar navbar-inverse navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
                 <li><a href="index.php"> Home </a></li>
-                <li><a href="products.php">Books</a></li>
+                <li class="active"><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active dropdown">
+                <li class="dropdown">
                     <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
@@ -101,15 +104,5 @@
         </div><!-- end info div-->
         
     </div><!--end product display div-->
-
-	<!-- Footer -->
-	<br/>
-	<ul class="footer" style="padding-left:5%">
-		<p style="color:white">
-			Address: 146 Allamy Street <br/>
-			Contact Us: 01 2108 9952 <br/>
-		</p>
-	</ul>
-    
 </body>
 </html>
