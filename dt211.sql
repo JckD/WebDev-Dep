@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2018 at 09:03 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Nov 19, 2018 at 03:12 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -74,11 +74,19 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `user` (
-  `username` varchar(10) NOT NULL,
-  `password1` varchar(20) NOT NULL,
-  `address` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `image` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`username`, `email`, `address`, `password`, `image`) VALUES
+('Casey Ogbevoen', 'caseyv1999@gmail.com', '60 Goatstown Close, Goatstown, Dublin 14', 'hello1', 'uploads/Casey Ogbevoen.jpg');
 
 --
 -- Indexes for dumped tables
