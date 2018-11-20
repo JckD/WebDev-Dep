@@ -5,6 +5,7 @@
     //display session variable if it is set
     if(isset($_SESSION["user"])){
         echo $_SESSION["user"];
+        $user = $_SESSION["user"];
     }
 ?>
 
@@ -27,7 +28,8 @@
 
 <title> The Book Shop </title>
 
-<body >
+<body>
+    
     <h1> The Book Shop </h1>
     
 	<!-- Header - to navigate the site -->
@@ -35,66 +37,65 @@
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
                 <li><a href="index.php"> Home </a></li>
-                <li><a href="products.php">Books</a></li>
+                <li class="active"><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                 <li>
+                <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
-                <li class="active dropdown">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="active"><a href="profile.php"> My Profile </a></li>
-                        <li><a href="editprofile.php"> Edit Profile </a></li>
+                        <li><a href="profile.php"> My Profile </a></li>
+                        <li><a href="login.php"> Log In</a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </li>
+                
             </ul>
         </div>
             
 		<!-- Library Image -->
 		<img style="height:20%;width:100%" src="library2crop.jpg"/>
 	</nav>
-    
-    <h2 style="padding-left:2%"> My Profile </h2> 
-    <div style="padding-left: 5%">
-        <?php
-    
-        if(isset ($_SESSION["user"])){
+
+   
+        
+        <div style=" width: 75%; display: block; margin-left:12%; text-align: center"> 
+
+           
+        <h3>Your order has been placed!</h3>
+            <h5>Thank you for shopping with us.</h5>
+            
+        <?php 
+        
             //connect to database
             $con = mysqli_connect("localhost","root","","dt211");
-
+    
             //check connection
             if(mysqli_connect_errno())
             {
                 echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
             }
+    
+             $sql = "DELETE FROM `orders` WHERE username = '".$user."'";
+               
+            if (!mysqli_query($con,$sql)){
+                
+                die('Error: '. mysqli_error($con));
+            }       
+    
+        ?>
+        <div style="float: center; margin-bottom: 100px">
+           
+            <form action="index.php" method="post">
+                    <input class="btn btn-dark" type="submit" style="margin-left: 10px" value="Home Page">
+            </form>
+        </div>
             
-            //store session username in a variable
-            $session = $_SESSION["user"];
-
-            $sql = "SELECT username, email, address, image FROM user WHERE username = '$session'";
-
-            $result = $con->query($sql);
-
-            if($result->num_rows > 0){
-
-                while($row = $result->fetch_assoc()){
-                    echo "<img style='height: 300px; width: 300px' class='img-circle' src='" . "$row[image]" . "'/><br><br>";
-                    echo "<h4> Username: " . "$row[username]" . "</h4><br>";
-                    echo "<h4> Email: " . "$row[email]" . "<h4><br>";
-                    echo "<h4> Address: " . "$row[address]" . "<h4><br>";
-                }
-            }
-            
-            //echo "<br><button href=" . "editprofile.php" . "> Edit Profile </button>";
-        }
-        else{
-            echo "Please <a href=". "login.php" . ">login </a> to see your Profile.";
-        }
-    ?>
-    </div>
-    <br>
-</body>
+    
+          
+        </div>
+    </body>
 </html>

@@ -5,6 +5,7 @@
     //display session variable if it is set
     if(isset($_SESSION["user"])){
         echo $_SESSION["user"];
+        $user = $_SESSION["user"];
     }
 ?>
 
@@ -40,7 +41,7 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                 <li>
+                <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="dropdown">
@@ -51,6 +52,7 @@
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </li>
+                
             </ul>
         </div>
             
@@ -59,16 +61,7 @@
 	</nav>
 
     <div style="padding: 0%; margin-left: 12%">
-        	<!-- Search Bar -->
-            	<form action="searchResults.php" class="form-inline justify-content-center" method="post">
-                    <div class="form-group">
-                        <input type="text" 
-                               class="form-control"
-                               name = "search" 
-                               placeholder="Something else...?"/>
-                        <button type="submit" class="btn btn-dark" href = "searchResults.php"> Search </button>
-                    </div>
-                </form>
+        	<h3>Your Shopping Cart:</h3>
         </div>
         
         <div style=" width: 75%; display: block; margin-left:12%"> 
@@ -80,8 +73,9 @@
     
             
         <?php 
-        
-            //connect to database
+            
+        if(isset ($_SESSION["user"])){
+             //connect to database
             $con = mysqli_connect("localhost","root","","dt211");
     
             //check connection
@@ -90,7 +84,7 @@
                 echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
             }
     
-            $sql = "SELECT * FROM books";
+            $sql = "SELECT title,price FROM orders where username = '".$user."'";
     
             $result = $con->query($sql);
     
@@ -98,35 +92,97 @@
             {
             
                 echo       '<tr>';
-                echo            '<th scope="col" style="width: 25">Cover</th>';
-                echo            '<th scope="col" style="width: 30%;">Title</th>';
-                echo            '<th scope="col" style="width: 30%; ">Author</th>';
-                echo            '<th scope="col" style="width: 30%; ">Price</th>';
+                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Cover</th>';
+                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Title</th>';
+                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Price</th>';
+                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Quantity</th>';
                 echo        '</tr>';
         
                 while($row = $result->fetch_assoc())
                 {
                     echo "<tr>
                             <td style='text-align: center; vertical-align: middle'>
-                            <a href='"."$row[title]".".php'><img style='width:100%' src='"."$row[title]".".jpg'
+                            <a href='"."$row[title]".".html'><img style='width:25%' src='"."$row[title]".".jpg'
                             </td>
                             <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".php'>"."$row[title]". "
+                            <a href='"."$row[title]".".html'>"."$row[title]". "
                             </td>
                             <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".php'>"."$row[author]"."
+                            <a href='"."$row[title]".".html'>$"."$row[price]"."
                             </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".php'>$"."$row[price]"."
+                            <td style='text-align: center; vertical-align: middle;'id='quantity'>
+                            <p id='num'>1</p><br><button  class='btn btn-dark' style='margin-right:3px;margin-left: 5px' onclick='increase()'>+</button><button  class='btn btn-dark' onclick='decrease()' >-</button>
                             </td>
                         </tr>";
                 }
             }
+            else {
+                echo "Your cart is empty!";
+            }
+        }
+        else{
+            echo "Please <a href=". "login.php" . ">login </a> to see your Cart.";
+        }
+           
+                
     
         ?>
+            
     
         </table>
+            <div style="float: left; margin-right: 0px" class="btn-group" role="group" aria-label="Basic example">
+                <form class="px-4 py-3" action="products.php">
+                    <input class="btn btn-secondary" type="submit" style="margin-left: 10px" value="Continue Shopping" href="products.php">
+            
+                </form>
+            </div>
+            <div style="float: left; margin-right: 0px" class="btn-group" role="group" aria-label="Basic example">
+                
+            <form class="px-4 py-3" action="delete.php">
+               
+            
+                <input class="btn btn-secondary" type="submit" style="margin-left: 10px" value="Delete Cart"> 
+            </form>
+           
+        </div>
+        <div style="float: right; margin-bottom: 100px">
+           
+            <form action="order.php" method="post">
+                    <input class="btn btn-dark" type="submit" style="margin-left: 10px" value="Place Order">
+            </form>
+        </div>
     </div>
-	   <br/>
+    <p id="test"></p>
     </body>
+    <script>
+        
+        function increase(){
+            
+            var amount = document.getElementById('num')
+            
+            var quantity = Number(amount.textContent);
+            
+            quantity++;
+            
+            amount.textContent = quantity;
+            document.getElementById('test').innerHTML = quantity;
+        }
+        
+        function decrease(){
+            
+              var amount = document.getElementById('num')
+            
+            var quantity = Number(amount.textContent);
+            
+            quantity--;
+            
+            if (quantity < 0){
+                quantity =0;
+            };
+            
+            amount.textContent = quantity;
+            document.getElementById('test').innerHTML = quantity;
+        }
+        
+    </script>
 </html>

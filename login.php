@@ -101,6 +101,9 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                 <li>
+                    <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </li>
                 <li class="active dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">

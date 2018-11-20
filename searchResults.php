@@ -41,6 +41,9 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                 <li>
+                    <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </li>
                 <li class="active dropdown">
                     <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
@@ -102,6 +105,7 @@
     <?php
         $term = '';
         $genre ='';
+            
     
         
         //connect to database
@@ -125,6 +129,7 @@
     
         //use the string to search for a book,author, publisher,genre or description matching that string
         
+         
         
          $filter = "select * from (SELECT * FROM books WHERE  title LIKE '%" .$term. "%'
                                     OR author LIKE '%" .$term. "%'
@@ -148,16 +153,16 @@
             {
                 echo "<tr>
                         <td style='text-align: center; vertical-align: middle'>
-                            <a href='"."$row[title]".".html'><img style='width:100%' src='"."$row[title]".".jpg'
+                            <a href='"."$row[title]".".php'><img style='width:100%' src='"."$row[title]".".jpg'
                         </td>
                         <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>"."$row[title]". "
+                            <a href='"."$row[title]".".php'>"."$row[title]". "
                         </td>
                         <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>"."$row[author]"."
+                            <a href='"."$row[title]".".php'>"."$row[author]"."
                         </td>
                         <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>$"."$row[price]"."
+                            <a href='"."$row[title]".".php'>$"."$row[price]"."
                         </td>
                      </tr>";
             }
