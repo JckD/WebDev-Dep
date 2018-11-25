@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-
+<!--
+    Web developement and deployment
+    Group Assignment
+    Jack Doyle | Casey Ogbovoen
+    1984.php
+    Web page that displays the user's
+    cart
+-->
 <?php 
+    //Start session
     session_start();
     //display session variable if it is set
     if(isset($_SESSION["user"])){
@@ -10,179 +18,220 @@
 ?>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="Stylesheet" type="text/css" href="stylesheet.css"/>
+        <link rel="Stylesheet" type="text/css" href="stylesheet.css"/>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+        <!-- JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
 
-<title> The Book Shop </title>
+    <title> The Book Shop </title>
 
-<body>
-    
-    <h1> The Book Shop </h1>
-    
-	<!-- Header - to navigate the site -->
-	<nav class="navbar navbar-inverse navbar-default">
-		<div class="container-fluid">
-			<ul class="nav navbar-nav">
-                <li><a href="index.php"> Home </a></li>
-                <li class="active"><a href="products.php">Books</a></li>
-            </ul>
+    <body>
+
+        <h1> The Book Shop </h1>
+
+        <!-- Header - to navigate the site -->
+        <nav class="navbar navbar-inverse navbar-default">
+            <!--Open Nav bar div-->
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <!--Home button that links to home page-->
+                    <li><a href="index.php"> Home </a></li>
+                    <!--Books button that links to products.php-->
+                    <li class="active"><a href="products.php">Books</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <!--Icon Button that links to user's cart-->
+                    <li>
+                        <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    </li>
+                    <!--User Icon button dropdown to log iun/out and user profile pages-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile.php"> My Profile </a></li>
+                            <li><a href="login.php"> Log In</a></li>
+                            <li><a href="logout.php"> Logout </a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div><!--Close nav bar div-->
+
+            <!-- Library Image -->
+            <img style="height:20%;width:100%" src="library2crop.jpg"/>
+        </nav>
+
+            <div style=" width: 75%; display: block; margin-left:12%"> 
                 
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="profile.php"> My Profile </a></li>
-                        <li><a href="login.php"> Log In</a></li>
-                        <li><a href="logout.php"> Logout </a></li>
-                    </ul>
-                </li>
-                
-            </ul>
-        </div>
-            
-		<!-- Library Image -->
-		<img style="height:20%;width:100%" src="library2crop.jpg"/>
-	</nav>
+                <h3>Your Shopping Cart:</h3>
+                <table class="table table-hover" style = "margin-top:20px;
+                                             text-align: center;
+                                             font-size: 20px;
+                                             width: 100%" id='table'>
 
-    <div style="padding: 0%; margin-left: 12%">
-        	<h3>Your Shopping Cart:</h3>
-        </div>
-        
-        <div style=" width: 75%; display: block; margin-left:12%"> 
+                    <?php 
 
-            <table class="table table-hover" style = "margin-top:20px;
-                                         text-align: center;
-                                         font-size: 20px;
-                                         width: 100%">
-    
-            
-        <?php 
-            
-        if(isset ($_SESSION["user"])){
-             //connect to database
-            $con = mysqli_connect("localhost","root","","dt211");
-    
-            //check connection
-            if(mysqli_connect_errno())
-            {
-                echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
-            }
-    
-            $sql = "SELECT title,price FROM orders where username = '".$user."'";
-    
-            $result = $con->query($sql);
-    
-            if ($result->num_rows > 0)
-            {
-            
-                echo       '<tr>';
-                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Cover</th>';
-                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Title</th>';
-                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Price</th>';
-                echo            '<th scope="col" style="width: 25%;text-align: center; vertical-align: middle">Quantity</th>';
-                echo        '</tr>';
-        
-                while($row = $result->fetch_assoc())
-                {
-                    echo "<tr>
-                            <td style='text-align: center; vertical-align: middle'>
-                            <a href='"."$row[title]".".html'><img style='width:25%' src='"."$row[title]".".jpg'
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>"."$row[title]". "
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'>
-                            <a href='"."$row[title]".".html'>$"."$row[price]"."
-                            </td>
-                            <td style='text-align: center; vertical-align: middle;'id='quantity'>
-                            <p id='num'>1</p><br><button  class='btn btn-dark' style='margin-right:3px;margin-left: 5px' onclick='increase()'>+</button><button  class='btn btn-dark' onclick='decrease()' >-</button>
-                            </td>
-                        </tr>";
-                }
-            }
-            else {
-                echo "Your cart is empty!";
-            }
-        }
-        else{
-            echo "Please <a href=". "login.php" . ">login </a> to see your Cart.";
-        }
-           
-                
-    
-        ?>
-            
-    
-        </table>
-            <div style="float: left; margin-right: 0px" class="btn-group" role="group" aria-label="Basic example">
-                <form class="px-4 py-3" action="products.php">
-                    <input class="btn btn-secondary" type="submit" style="margin-left: 10px" value="Continue Shopping" href="products.php">
-            
-                </form>
-            </div>
-            <div style="float: left; margin-right: 0px" class="btn-group" role="group" aria-label="Basic example">
-                
-            <form class="px-4 py-3" action="delete.php">
-               
-            
-                <input class="btn btn-secondary" type="submit" style="margin-left: 10px" value="Delete Cart"> 
-            </form>
-           
-        </div>
-        <div style="float: right; margin-bottom: 100px">
-           
-            <form action="order.php" method="post">
-                    <input class="btn btn-dark" type="submit" style="margin-left: 10px" value="Place Order">
-            </form>
-        </div>
-    </div>
-    <p id="test"></p>
+                        //Check if the suer is logged in to view cart
+                        if(isset ($_SESSION["user"])){
+                             //connect to database
+                            $con = mysqli_connect("localhost","root","","dt211");
+
+                            //check connection
+                            if(mysqli_connect_errno())
+                            {
+                                echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
+                            }
+                            //statement to select the user's cart from the oders table
+                            $sql = "SELECT title,price FROM orders where username = '".$user."'";
+
+                            //excute query
+                            $result = $con->query($sql);
+                            //set tiem variable  =1 to number cart items for reference
+                            $item = 1;
+
+                            //Echo user's cart
+                            if ($result->num_rows > 0)
+                            {
+                                //echo table titles
+                                echo       '<tr>';
+                                echo            '<th scope="col" style="width: 20%;text-align: center; vertical-align: middle">Cover</th>';
+                                echo            '<th scope="col" style="width: 20%;text-align: center; vertical-align: middle">Title</th>';
+                                echo            '<th scope="col" style="width: 20%;text-align: center; vertical-align: middle">Price</th>';
+                                echo            '<th scope="col" style="width: 20%;text-align: center; vertical-align: middle">Quantity</th>';
+                                echo        '</tr>';
+
+                                //while loop to echo user's cart use $row[title] to link to item pages
+                                //Quantity column uses increase() and decrease() script functions onlick pass the "item" var 
+                                while($row = $result->fetch_assoc())
+                                {
+                                    echo "<tr>
+
+                                            <td style='text-align: center; vertical-align: middle'>
+                                            <a href='"."$row[title]".".php'><img style='width:25%' src='"."$row[title]".".jpg'
+                                            </td>
+
+                                            <td style='text-align: center; vertical-align: middle;'>
+                                            <a href='"."$row[title]".".php'>"."$row[title]". "
+                                            </td>
+                                            <td style='text-align: center; vertical-align: middle;'>
+                                            <a href='"."$row[title]".".php'>$"."$row[price]"."
+                                            </td>
+                                            <td style='text-align: center; vertical-align: middle;'id='quantity'>
+                                            <p id='"."$item"."'>1</p><br><button  class='btn btn-dark' style='margin-right:3px;margin-left: 5px' onclick='increase("."$item".")'>+</button><button  type = 'button'class='btn btn-dark' data-toggle='popover' data-content='If there are items at 0 they will not be added to your order' onclick='decrease("."$item".")' >-</button>
+                                            </td>
+                                        </tr>";
+                                    //increment $item to ref each book in the table
+                                    $item = $item +1;
+
+                                }//end while
+
+                                  //echo buttons to "Continue Shopping" "empty cart" and "Place order
+                                  echo " <div style='float: left; margin-right: 0px' class='btn-group' role='group' aria-label='Basic example'>
+                                            <form class='px-4 py-3' action='products.php'>
+                                                <input class='btn btn-secondary' type='submit' style='margin-left: 10px' value='Continue Shopping' href='products.php'>
+                                           </form>
+                                        </div>
+
+                                        <div style='float: left; margin-right: 0px' class='btn-group' role='group' aria-label='Basic example'>
+
+                                            <form class='px-4 py-3' action='delete.php'>
+
+                                                <input class='btn btn-secondary' type='submit' style='margin-left: 10px' value='Delete Cart'> 
+                                            </form>
+
+                                        </div>
+                                        <div style='float: right; margin-bottom: 100px'>
+
+                                            <form action='order.php' method='post'>
+                                                <input class='btn btn-dark' type='submit' style='margin-left: 10px'
+                                                value='Place Order' onlcik=checkval()>
+
+                                            </form>
+                                        </div>";
+
+                            }//end if
+
+                            //if there is nothing in the user's cart echo that it is empty
+                            else {
+                                echo "Your cart is empty!";
+                            }//end else
+                        }//end if
+
+                        //if the user's is not loffed in they can't view cart link to login page
+                        else{
+                            echo "Please <a href=". "login.php" . ">login </a> to see your Cart.";
+                        }//end else
+                    //emd php
+                    ?>
+
+                </table><!--End table-->
+            </div><!--end div-->
     </body>
     <script>
-        
-        function increase(){
-            
-            var amount = document.getElementById('num')
-            
-            var quantity = Number(amount.textContent);
-            
+        //Increase Function takes "Item" variable
+        //Increases "Quantity" column for each book
+        function increase(item){
+
+            //get the current quantity number from the table
+            var amount = document.getElementById(item)
+            //get the text content of "amount" convert it to a number
+            var quantity = Number(amount.textContent) ;
+            //increment quantity
             quantity++;
+            //set max limit of 99 to quantity
+            //if quantity is 99 keep it at 99
+            if (quantity > 99){
+                 quantity = 99;
+            };//end if
             
+            //make the text content of "amount" = "quantity"
             amount.textContent = quantity;
-            document.getElementById('test').innerHTML = quantity;
+            
+        };//end increase function
+
+        //Decrease Funtion takes "Item" variable 
+        //Decreases "Quantity" column for each book
+        function decrease(item){
+            
+            //get the current quantity number from the table
+            var amount = document.getElementById(item)
+            //get the text content of "amount" convert it to a number
+            var quantity = Number(amount.textContent);
+            //decrement the quantity 
+            quantity--;
+            //set the limit of 99 to quantity
+            //if quantity is 0 keept it at 0
+            if (quantity <= 0){
+                quantity =0;
+                       
+            };//end if
+            
+            //make the text content of "amount" = "quantity"
+            amount.textContent = quantity;
+            
+        };//end decrease
+        
+        //checkVal function
+        function checkval() {
+            var num = $()
         }
         
-        function decrease(){
-            
-              var amount = document.getElementById('num')
-            
-            var quantity = Number(amount.textContent);
-            
-            quantity--;
-            
-            if (quantity < 0){
-                quantity =0;
-            };
-            
-            amount.textContent = quantity;
-            document.getElementById('test').innerHTML = quantity;
-        }
+        //fucntion for popover on "+" button
+        $(function () {
+             $('[data-toggle="popover"]').popover()
+        })
         
     </script>
 </html>

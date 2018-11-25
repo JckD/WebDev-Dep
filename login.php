@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-
+<!--
+    Web developement and deployment
+    Group Assignment
+    Jack Doyle | Casey Ogbovoen
+    login.php
+    page that lets user log in
+-->
 <?php
     //start session
     session_start();
@@ -96,15 +102,19 @@
 	<nav class="navbar navbar-inverse navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
+                <!--Home button that links to the home page-->
                 <li><a href="index.php"> Home </a></li>
+                <!--Books button that links to porducts.php-->
                 <li><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                <!--Icon that links to the user's cart-->
                  <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
-                <li class="active dropdown">
+                <!--User Icon button dropdown button to log in/out and user porfile pages-->
+                <li class="active dropdown">  
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
@@ -113,7 +123,7 @@
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div><!--Close nav bar div-->
             
 		<!-- Library Image -->
 		<img style="height:20%;width:100%" src="library2crop.jpg"/>
