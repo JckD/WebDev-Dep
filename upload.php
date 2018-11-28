@@ -21,35 +21,35 @@
             // Check if image file is a actual image or fake image
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
-                array_push($result, "File is an image - " . $check["mime"] . ".");
+                //array_push($result, "File is an image - " . $check["mime"] . ".");
                 $uploadOk = 1;
             } else {
-                array_push($result, "File is not an image.");
+                array_push($result, "*File is not an image.");
                 $uploadOk = 0;
             }
 
             // Check if file already exists
             if (file_exists($target_file)) {
-                array_push($result, "Sorry, file already exists.");
+                array_push($result, "*Sorry, file already exists.");
                 $uploadOk = 0;
             }
 
             // Check file size
             if ($_FILES["fileToUpload"]["size"] > 500000) {
-                array_push($result, "Sorry, your file is too large.");
+                array_push($result, "*Sorry, your file is too large.");
                 $uploadOk = 0;
             }
 
             // Allow certain file formats
             if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif" ) {
-                array_push($result, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+                array_push($result, "*Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
                 $uploadOk = 0;
             }
 
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0) {
-                array_push($result, "Sorry, your file was not uploaded.");
+                array_push($result, "*Sorry, your file was not uploaded.");
 
             // if everything is ok, try to upload file
             }
@@ -62,9 +62,9 @@
 
                     array_push($result, "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.");
                     
-                    header("Location: profile.php");
+                    header("Location: editprofile.php");
                 } else {
-                    array_push($result, "Sorry, there was an error uploading your file.");
+                    array_push($result, "*Sorry, there was an error uploading your file.");
                 }
             }
         }
@@ -123,7 +123,7 @@
 	</nav>
     <?php
         foreach($result as $re){
-            echo $re . "<br>";
+            echo "<p style='color:red'>" . $re . "</p>";
         }
     ?>
 
@@ -131,9 +131,9 @@
         <div class="form-inline" style="padding-bottom: 3%">
             <h1> Upload your Profile Picture: </h1>
             <br>
-            <input type="file" name="fileToUpload" id="fileToUpload">
+            <button class="btn btn-dark"><input type="file" name="fileToUpload" id="fileToUpload"></button>
             <br>
-            <input type="submit" value="Upload Image" name="submit">
+            <button class="btn btn-dark"><input type="submit" value="Upload Image" name="submit"></button>
         </div>
     </form>
 </body>

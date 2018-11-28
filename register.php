@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <?php
+    //initialise variables to empty strings
+    $username = $email = $address1 = $address2 = $password1 = $password2 = "";
+        
     //start session
     session_start();
 
@@ -17,7 +20,7 @@
         
         if(isset($_POST["submit"])){
             
-            //if any fields are empty
+            //if any field is empty
             if (empty($_POST["username"])) {
                 array_push($errors,"*Username is required.");
             }
@@ -31,45 +34,71 @@
                 array_push($errors, "*Password is required.");
             }
             if(empty($_POST["password2"])){
-                array_push($errors,"*Confirm Password.");
+                array_push($errors,"*Please Confirm Password.");
             }
-
+            
+            //test input function
+            function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
+            
+            //get data from form
+            $username = test_input($_POST["username"]);
+            $email = test_input($_POST["email"]);
+            
+            $address1 = test_input($_POST["address1"]);
+            $address2 = test_input($_POST["address2"]);
+            //concatonate address line 1 and line 2
+            $address = $address1 . ", " . $address2;
+            
             //if passwords do not match
             if ($_POST["password1"] != $_POST["password2"]) {
                 array_push($errors, "*Passwords do not match.");
              }
+            $password1 = test_input($_POST["password1"]);
+            $password2 = test_input($_POST["password2"]);
             
+            //password must be greater than 8 characters
+            if(strlen($password1) < 8){
+                array_push($errors, "*Password must be at least 8 characters.");
+            }
+            
+            //ensure only valid data is entered
+            //username - only letters and white space
+            if (!preg_match("/^[a-zA-Z0-9_,' ]*$/",$username)) {
+              array_push($errors, "*Only alphanumeric characters allowed in the Username field."); 
+            }
+            //email - valid email address
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+              array_push($errors,"*Invalid email format."); 
+            }
+            //address - allow letters, numbers and commas
+            if (!preg_match("/^[a-zA-Z0-9_,' ]*$/",$address)) {
+              array_push($errors, "*Only alphanumeric characters are allowed in the Address fields."); 
+            }
+            //password - only letters numbers and underscores
+            if (!preg_match("/^[a-zA-Z0-9_,' ]*$/",$password1)) {
+              array_push($errors, "*Only alphanumeric characters are allowed in the Password field."); 
+            }
+
             if(!$errors){
-                //get data from form
-                $username = $_POST["username"];
-                $email = $_POST["email"];
-                $address1 = $_POST["address1"];
-                $address2 = $_POST["address2"];
-                //concatonate address line 1 and line 2
-                $address = $address1 . ", " . $address2;
-                $password = $_POST["password1"];
                 
-                //set username as session variable
-                $_SESSION["user"] = $username;
-
-                /*
-                //prepare insert statement
-                $sql = 'INSERT INTO user (username, email, address, password) VALUES (:username, :email, :address, :password)';
-                $query = $con->prepare($sql);
-                $query->bindParam(':username' ,$username);
-                $query->bindParam(':email' ,$email);
-                $query->bindParam(':address' ,$address);
-                $query->bindParam(':password' ,$password);
-
-                //insert row
-                $query->execute();
-                */
-
-                $sql = "INSERT INTO user (username, email, address, password) VALUES ('$username', '$email', '$address', '$password')";
+                //encrypt the password
+                $password = password_hash($password1, PASSWORD_DEFAULT);
+                
+                //insert data into database
+                $sql = "INSERT INTO user (username, email, address, password, image) VALUES ('$username', '$email', '$address', '$password', 'uploads/user.jpg')";
 
                 mysqli_query($con, $sql);
                 
-                header("Location: upload.php");
+                //set username as session variable
+                $_SESSION["user"] = $username;
+                
+                //view user profile
+                header("location: profile.php");
             }
         }
     }
@@ -79,46 +108,82 @@
 	function checkForm(){
 		//Ensure username field isn't empty
 		var username = document.getElementById("username");
-		if(username == null || username == ""){
-			alert("Please enter a Username");
-			return false;
-		}
-
-		//ensure email field isn't empty
-		var email = document.getElementById("email");
-		if(email == null || email == ""){
-			alert("Please enter an Email Address");
-			return false;
-		}
-
-		//ensure the first address field is not empty
-		var address1 = document.getElementById("address1");
-		if(address1 == null || address1 == ""){
-			alert("Please enter a Shipping Address");
-			return false;
-		}
-
-		//ensure password was entered
-		var password1 = document.getElementById("password1");
+        var email = document.getElementById("email");
+        var address1 = document.getElementById("address1");
+        var address2 = document.getElementById("address2");
+        var password1 = document.getElementById("password1");
 		var password2 = document.getElementById("password2");
+        
+        //ensure required fields are not left empty
+		if(username == null || username == ""){
+			alert("Please enter a Username!");
+			return false;
+		}
+		if(email == null || email == ""){
+			alert("Please enter an Email Address!");
+			return false;
+		}
+		if(address1 == null || address1 == ""){
+			alert("Please enter a Shipping Address!");
+			return false;
+		}
 		if(password1 == null || password1 == ""){
-			alert("Please enter a Password");
+			alert("Please enter a Password!");
 			return false;
 		}
-
-		//ensure password was confirmed
 		if(password2 == null || password2 == ""){
-			alert("Plese confirm your Password");
+			alert("Plese confirm your Password!");
 			return false;
 		}
-
+        
+        //ensure valid email format 
+        atpos = email.indexOf("@");
+        dotpos = email.lastIndexOf(".");
+         
+        if (atpos < 1 || ( dotpos - atpos < 2 )) {
+            alert("Invalid Email Format, Please try again.")
+            return false;
+        }
+        
+        //ensure password is greater than 8 characters
+        if(password1.length < 8){
+            document.getElementById("password-error").innerHTML = "Password length must be at least 8 characters.";
+        }
+        
 		//ensure passwords match
 		if(!password1.equals(password2)){
-			alert("Passwords do not match");
+			alert("Passwords do not match!");
 			return false;
 		}
+        
+        //ensure only alphanumeric characters in data fields
+        var AlphaNum = /^[a-zA-Z0-9_,' ]*$/;
+        
+        function validate(input){
+            if(input.value.match(AlphaNum)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        if(validate(username) == false){
+            document.getElementById("username-error").innerHTML = "*Invalid Characters in Username field.";
+        }
+        if(validate(address1) == false){
+            document.getElementById("address-error").innerHTML = "*Invalid Characters in Address fields.";
+        }
+        if(validate(address2) == false){
+            document.getElementById("address-error").innerHTML = "*Invalid Characters in Address fields.";
+        }
+        if(validate(password1) == false){
+            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
+        }
+        if(validate(password2) == false){
+            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
+        }
 	}//end checkForm()
-    
 </script>
 
 <html lang="en">
@@ -182,35 +247,39 @@
         
     <h2> Create an Account </h2>
     <br>
-        <form id= "form" style="padding-left:5%" action="" method="POST" onsubmit="return checkForm();">
+        <form novalidate id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" onsubmit="return checkForm();">
             
             <div class="form-group" style="padding-bottom:3%">
                 <label for="username"> Username: </label>
-                <input type="text" class="form-control" placeholder="Enter your Username" id="username" name="username" required>
+                <input type="text" class="form-control" placeholder="Enter your Username" id="username" name="username" value="<?php echo $username; ?>" required>
+                <span id="username-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
                 <label for="email"> E-mail: </label>
-                <input type="email" class="form-control" placeholder="Enter E-mail Address" id="email" name="email" required>
+                <input type="email" class="form-control" placeholder="Enter E-mail Address" id="email" name="email" value="<?php echo $email; ?>" required>
+                <span id="email-error" style="color: red"></span>
             </div>
 
             <div class="form-group">
                 <label for="address"> Shipping Address: </label>
-                <input type="text" class="form-control" placeholder="Shipping Address Line 1" id="address1" name="address1" required>
+                <input type="text" class="form-control" placeholder="Shipping Address Line 1" id="address1" name="address1" value="<?php echo $address1; ?>" required>
             </div>
 
             <div style="padding-bottom:3%">
-                <input type="text" class="form-control" placeholder="Shipping Address Line 2" id="address2" name="address2">
+                <input type="text" class="form-control" placeholder="Shipping Address Line 2" id="address2" name="address2" value="<?php echo $address2; ?>">
+                <span id="address-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
                 <label for="password1"> Password: </label>
-                <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" required>
+                <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" min="8" required>
             </div>
 
             <div class="form-group">
                 <label for="password2"> Confirm Password: </label>
                 <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
+                <span id="password-error" style="color: red"></span>
             </div>
 
             <br/>

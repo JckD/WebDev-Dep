@@ -56,9 +56,10 @@
 		<!-- Library Image -->
 		<img style="height:20%;width:100%" src="library2crop.jpg"/>
 	</nav>
+    <br>
+    <br>
     
-    <h2 style="padding-left:2%"> My Profile </h2> 
-    <div style="padding-left: 5%">
+    <div align="center">
         <?php
     
         if(isset ($_SESSION["user"])){
@@ -81,19 +82,21 @@
             if($result->num_rows > 0){
 
                 while($row = $result->fetch_assoc()){
+                    echo "<h2 style='padding-right:30%'> My Profile </h2>";
                     echo "<img style='height: 300px; width: 300px' class='img-circle' src='" . "$row[image]" . "'/><br><br>";
                     echo "<h4> Username: " . "$row[username]" . "</h4><br>";
                     echo "<h4> Email: " . "$row[email]" . "<h4><br>";
                     echo "<h4> Address: " . "$row[address]" . "<h4><br>";
+                    echo "<a href='validatepassword.php'><button class='btn btn-dark'> Edit Profile </button></a> ";
+                    echo "<a href='deleteaccount.php'><button class='btn btn-dark'> Delete Profile </button></a>";
                 }
             }
             
-            //echo "<br><button href=" . "editprofile.php" . "> Edit Profile </button>";
         }
         else{
             echo "Please <a href=". "login.php" . ">login </a> to see your Profile.";
         }
-    ?>
+    ?>  
     </div>
     <br>
 </body>

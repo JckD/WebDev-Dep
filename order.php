@@ -100,7 +100,7 @@
             <!-- Button that links back to home page-->
             <div style="float: center; margin-bottom: 100px">
 
-                <form action="index.php " method="post">
+                <form action="index.php" method="post">
                         <input class="btn btn-dark" type="submit" style="margin-left: 10px" value="Home Page">
                 </form>
             </div> <!--Close button div-->

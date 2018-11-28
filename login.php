@@ -7,6 +7,9 @@
     page that lets user log in
 -->
 <?php
+    //initialise variables to empty strings
+    $username = $password = "";
+        
     //start session
     session_start();
 
@@ -31,25 +34,37 @@
                 array_push($errors, "*Password is required.");
             }
             
+            function test_input($data) {
+              $data = trim($data);
+              $data = stripslashes($data);
+              $data = htmlspecialchars($data);
+              return $data;
+            }
+            
+            //get data from form
+            $username = test_input($_POST["username"]);
+            $password = test_input($_POST["password"]);
+            
             if(!$errors){
-                // username and password sent from form 
-                $username = $_POST["username"];
-                $password = $_POST["password"];
-
-                //set username as session variable
-                $_SESSION["user"] = $username;
-
-                $sql = "SELECT username FROM user WHERE username = '$username' and password = '$password'";
-
-                $result = $con->query($sql);
-
-                // If result matched $myusername and $mypassword, table row must be 1 row
-                if($result->num_rows == 1) {
+                //get row from database
+                $password_sql = "SELECT password FROM user WHERE username = '$username'";
+                $result = $con->query($password_sql);
+                
+                if($result->num_rows > 0){
+                    while($row = $result->fetch_assoc()){
+                        $hashed_password = $row[password];
+                    }
+                }
+                
+                //verify password match
+                if(password_verify($password,$hashed_password)){
+                    //set username as session variable
+                    $_SESSION["user"] = $username;
                     echo("Logged In as: " . $_SESSION["user"]);
-                    header("Location: profile.php");
+                    header("location: profile.php");
                 }
                 else {
-                    $form["username"] = $form["password"] =  '';
+                    //display error
                     array_push($errors, "*Invalid Login Details.");
                 }
             }
@@ -59,19 +74,38 @@
 
 <script>
 	function checkForm(){
-		//Ensure username field isn't empty
+        //Ensure username field isn't empty
 		var username = document.getElementById("username");
+        var password = document.getElementById("password");
+        
+        //ensure required fields are not left empty
 		if(username == null || username == ""){
-			alert("Please enter your Username.");
+			alert("Please enter a Username!");
 			return false;
 		}
-
-		//ensure password was entered
-		var password = document.getElementById("password");
-		if(password == null || password == ""){
-			alert("Please enter your Password.");
+        if(password == null || password == ""){
+			alert("Please enter a Password!");
 			return false;
 		}
+        
+        //ensure only alphanumeric characters in data fields
+        var AlphaNum = /^[a-zA-Z0-9_,' ]*$/;
+        
+        function validate(input){
+            if(input.value.match(AlphaNum)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        if(validate(username) == false){
+            document.getElementById("username-error").innerHTML = "*Invalid Characters in Username field.";
+        }
+        if(validate(password) == false){
+            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
+        }
 	}//end checkForm()
 </script>
 
@@ -131,23 +165,26 @@
 
 	<div class="container" style="width:50%">
         
-        <!-- display any errors -->
-        <?php
-            foreach($errors as $err){
-                echo '<p style="color:red">' . $err . '</p>';
-            }
-        ?>
+    <!-- display any errors -->
+    <?php
+        foreach($errors as $err){
+            echo "<p style='color:red'>" . $err . '</p>';
+        }
+    ?>
         
-		<h2> Log In </h2>
-		<form style="padding-left:5%" action="login.php" method="post" onsubmit="return checkForm();">
+	<h2> Log In </h2>
+    <br>
+		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return checkForm();">
 			<div class="form-group">
 				<label for="username"> Username: </label>
-				<input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" required>
+				<input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" value="<?php echo $username ?>" required>
+                <span id="username-error" style="color: red"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="password"> Password: </label>
-				<input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" required>
+				<input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" value="<?php echo $password ?>" required>
+                <span id="password-error" style="color: red"></span>
 			</div>
 
 			<br>

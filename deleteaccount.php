@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-
+<!--
+    Web developement and deployment
+    Group Assignment
+    Jack Doyle | Casey Ogbovoen
+    order.php
+    Page that deletes the user's account
+-->
 <?php
     //initialise variables to empty strings
     $password1 = $password2 = "";
@@ -57,8 +63,16 @@
                 
                 //verify password match
                 if(password_verify($password,$hashed_password)){
+                    //delete user from database
+                    $sql = "DELETE FROM user WHERE username = '$session'";
+                    mysqli_query($con, $sql);
+                    
+                    //unset and delete session
+                    session_unset();
+                    session_destroy();
+                    
                     //continue to edit profile
-                    header("location: editprofile.php");
+                    header("location: index.php");
                 }
                 else {
                     //display error
@@ -71,17 +85,23 @@
 
 <script>
 	function checkForm(){
+        //Ensure username field isn't empty
+        var password1 = document.getElementById("password1");
+		var password2 = document.getElementById("password2");
+        
 		//Ensure username field isn't empty
-		var password1 = document.getElementById("password1");
 		if(password1 == null || password1 == ""){
-			alert("Please enter your Password.");
+			alert("Please enter a Password!");
 			return false;
 		}
-
-		//ensure password was entered
-		var password2 = document.getElementById("password2");
 		if(password2 == null || password2 == ""){
-			alert("Please enter your Password.");
+			alert("Plese confirm your Password!");
+			return false;
+		}
+        
+        //ensure passwords match
+		if(!password1.equals(password2)){
+			alert("Passwords do not match!");
 			return false;
 		}
 	}//end checkForm()
@@ -107,7 +127,6 @@
 <title> The Book Shop </title>
 
 <body>
-    
     <h1> The Book Shop </h1>
     
 	<!-- Header - to navigate the site -->
@@ -151,18 +170,44 @@
 		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return checkForm();">
 			<div class="form-group">
                 <label for="password1"> Password: </label>
-                <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" value="<?php echo $password1 ?>" required>
+                <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" required>
             </div>
 
             <div class="form-group">
                 <label for="password2"> Confirm Password: </label>
-                <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" value="<?php echo $password2 ?>" required>
+                <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
             </div>
 
 			<br>
-			<button type="submit" class="btn btn-dark" name="submit"> Confirm </button>
-            <br>
-		</form>
-	</div>
+			<!--<button type="submit" class="btn btn-dark" name="submit"> Confirm </button>-->
+            
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">
+              Confirm
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <!--h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5-->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <h4> Are you sure you want to Delete your Account? </h4>
+                      <br>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal"> Close </button>
+                    <button type="submit" name="submit" class="btn btn-primary"> Continue </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+    </div>
     </body>
 </html>
