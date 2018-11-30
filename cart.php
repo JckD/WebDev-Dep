@@ -2,7 +2,7 @@
 <!--
     Web developement and deployment
     Group Assignment
-    Jack Doyle | Casey Ogbovoen
+    Jack Doyle | Casey Ogbevoen
     1984.php
     Web page that displays the user's
     cart
@@ -35,6 +35,7 @@
     </head>
 
     <title> The Book Shop </title>
+    <link rel="icon" href="http://icons.iconarchive.com/icons/icons8/windows-8/128/Printing-Book-icon.png" type="image/ico"> 
 
     <body>
 
@@ -76,6 +77,7 @@
             <div style=" width: 75%; display: block; margin-left:12%"> 
                 
                 <h3>Your Shopping Cart:</h3>
+                
                 <table class="table table-hover" style = "margin-top:20px;
                                              text-align: center;
                                              font-size: 20px;
@@ -94,12 +96,13 @@
                                 echo "Failed to connect to MYSQL: ". mysqli_connect_errno();
                             }
                             //statement to select the user's cart from the oders table
-                            $sql = "SELECT title,price FROM orders where username = '".$user."'";
+                            $sql = "SELECT title,price,quantity FROM orders where username = '".$user."'";
 
                             //excute query
                             $result = $con->query($sql);
                             //set tiem variable  =1 to number cart items for reference
                             $item = 1;
+                            $name = '';
 
                             //Echo user's cart
                             if ($result->num_rows > 0)
@@ -116,6 +119,9 @@
                                 //Quantity column uses increase() and decrease() script functions onlick pass the "item" var 
                                 while($row = $result->fetch_assoc())
                                 {
+                                    //store each title to pass later
+                                    $t = json_encode($row['title']);
+                              
                                     echo "<tr>
 
                                             <td style='text-align: center; vertical-align: middle'>
@@ -129,9 +135,11 @@
                                             <a href='"."$row[title]".".php'>$"."$row[price]"."
                                             </td>
                                             <td style='text-align: center; vertical-align: middle;'id='quantity'>
-                                            <p id='"."$item"."'>1</p><br><button  class='btn btn-dark' style='margin-right:3px;margin-left: 5px' onclick='increase("."$item".")'>+</button><button  type = 'button'class='btn btn-dark' data-toggle='popover' data-content='If there are items at 0 they will not be added to your order' onclick='decrease("."$item".")' >-</button>
+                                            <p id='"."$item"."'>"."$row[quantity]"."</p><br>
+                                            <button  class='btn btn-dark' style='margin-right:3px;margin-left: 5px' onclick='increase($item,$t)' >+</button>
+                                            <button  class='btn btn-dark' onclick='decrease("."$item".",$t)' >-</button>
                                             </td>
-                                        </tr>";
+                                        </tr>"; 
                                     //increment $item to ref each book in the table
                                     $item = $item +1;
 
@@ -182,8 +190,8 @@
     <script>
         //Increase Function takes "Item" variable
         //Increases "Quantity" column for each book
-        function increase(item){
-
+        function increase(item, title){
+            
             //get the current quantity number from the table
             var amount = document.getElementById(item)
             //get the text content of "amount" convert it to a number
@@ -199,11 +207,21 @@
             //make the text content of "amount" = "quantity"
             amount.textContent = quantity;
             
+            //Asnychronous Communication to upadte order table
+            $.ajax({
+                url : 'updatequantity.php',
+                method : 'post',
+                data : {title:title,quantity: quantity},
+                success : function(response){
+                    
+                }
+            })
+            
         };//end increase function
 
         //Decrease Funtion takes "Item" variable 
         //Decreases "Quantity" column for each book
-        function decrease(item){
+        function decrease(item, title){
             
             //get the current quantity number from the table
             var amount = document.getElementById(item)
@@ -220,18 +238,26 @@
             
             //make the text content of "amount" = "quantity"
             amount.textContent = quantity;
+            console.log(quantity);
+            //Asynchronous Communication to update orer table
+             $.ajax({
+                url : 'updatequantity.php',
+                method : 'post',
+                data : {title:title, quantity: quantity},
+                success : function(response){
+                    
+                }
+             })
+            
             
         };//end decrease
         
-        //checkVal function
-        function checkval() {
-            var num = $()
-        }
-        
+  
         //fucntion for popover on "+" button
         $(function () {
              $('[data-toggle="popover"]').popover()
         })
         
+    
     </script>
 </html>

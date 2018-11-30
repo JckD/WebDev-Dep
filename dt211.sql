@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2018 at 09:05 PM
+-- Generation Time: Nov 30, 2018 at 03:10 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -45,7 +45,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`title`, `author`, `publisher`, `year`, `genre`, `descr`, `quantity`, `price`, `book_id`) VALUES
-('Detective Comics 27', 'E.C Stoner', 'DC', '1939-05-23', 'crime-fict', 'Detective Comics Issue #27', 1, 1000000, 1),
+('Detective Comics 27', 'E.C Stoner', 'DC', '1939-05-23', 'crime-fict', 'Detective Comics Issue #27', 1, 100, 1),
 ('1984', 'George Orwell', 'Secker and Warburg', '1949-06-08', 'Political ', 'The dystopian novel is set in 1984', 6, 19.84, 2),
 ('One Direction Where We Are', 'One Direction', 'HarperCollins', '2013-08-27', 'autobiography', 'In depth autobiography of the member of ', 67, 1.99, 3),
 ('To Kill a Mockingbird', 'Harper Lee', 'J. B. Lippincott & C', '1960-07-11', 'Southern G', 'Cult classic deals with sensitive topics', 45, 16.45, 4),
@@ -64,7 +64,8 @@ CREATE TABLE `orders` (
   `book_id` int(11) NOT NULL,
   `price` float NOT NULL,
   `title` varchar(60) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) NOT NULL,
+  `quantity` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -78,7 +79,7 @@ CREATE TABLE `user` (
   `password` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `image` int(150) NOT NULL
+  `image` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -86,8 +87,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `address`, `email`, `image`) VALUES
-('Casey Ogbevoen', 'hello1', '60 Goatstown Close, Goatstown, Dublin 14', 'caseyv1999@gmail.com', 0),
-('jack', '123', '17 dublin, yeah', 'ja@ja.com', 0);
+('Casey Ogbevoen', 'hello1', '60 Goatstown Close, Goatstown, Dublin 14', 'caseyv1999@gmail.com', '0'),
+('jack', '$2y$10$5XDKZLySjtPCVqIl5crk7e7GTbfrZ2sbh8C3AHLWvcaQvx2psiBxO', '17 dublin, jlkj', 'jack@me.ie', 'uploads/jack.jpg');
 
 --
 -- Indexes for dumped tables
