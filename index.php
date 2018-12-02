@@ -2,7 +2,7 @@
 <!--
     Web developement and deployment
     Group Assignment
-    Jack Doyle | Casey Ogbevoen
+    Jack Doyle | Casey Ogbovoen
     Home Page of The Book Shop
 -->
 <?php 
@@ -135,6 +135,8 @@
                 css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
                 document.body.appendChild(css);
             };
+            
+           
         </script>
         <br>
             
@@ -155,15 +157,37 @@
         </form>
 
         <br/>
+            <!-- Top Picks Div-->
+            <div style="padding-bottom: 20%;">
+                <div style="text-alignt: left"><h3>Top Picks:</h3></div>
+                <div style="padding-bottom: 20%">
+                    <div style="width: 30%; float: left">
+                        <a href='Dracula.php'><img style='width:62%' src='Dracula.jpg'> </a>
+                        <h4 style="margin-left:23%">Dracula</h4>
+                    </div>
+                    <div style="width: 30%; float: left">
+                        <a href='One%20Direction%20Where%20We%20Are.php'><img style='width:70%' src='One%20Direction%20Where%20We%20Are.jpg'> </a>
+                        <h4 style="margin-left: 0%">One Direction: Where we are now</h4>
+                    </div>
+                    <div style="width: 30%; float: left">
+                        <a href='Detective%20Comics%2027.php'><img style='width:65%' src='Detective%20Comics%2027.jpg'> </a>
+                        <h4 style="margin-left: 10%">Detective Comis #27</h4>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
+        
 
         <!-- Footer -->
         <br/>
-        <div class="footer elegant-dark">
-            <p style="color:white">
+       
+    </body>
+     <div class="footer elegant-dark">
+          <!--  <p style="color:white">
                 Address: 146 Allamy Street <br/>
                 Contact Us: 01 2108 9952 <br/>
-            </p>
+            </p>-->
         </div>
-    </body>
 </html>
