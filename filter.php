@@ -17,7 +17,7 @@
 	<!-- Header - to navigate the site -->
 	<ul class="header">
 		<li><a href="bookshophome.php">Home</a></li>
-        <li><a href="products.php">Books</a></li>
+        <li class="active"><a href="products.php">Books</a></li>
 		<li style="float:right"><a href="logout.php">Logout</a></li>
 		<li style="float:right"><a href="login.php">Login</a></li>
 	</ul>

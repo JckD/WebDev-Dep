@@ -2,7 +2,7 @@
 <!--
     Web developement and deployment
     Group Assignment
-    Jack Doyle | Casey Ogbovoen
+    Jack Doyle | Casey Ogbevoen
     Home Page of The Book Shop
 -->
 <?php 

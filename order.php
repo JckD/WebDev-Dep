@@ -46,12 +46,12 @@
                 <!--Home button that links to the home page-->
                 <li><a href="index.php"> Home </a></li>
                 <!--Books button that links to products.php-->
-                <li class="active"><a href="products.php">Books</a></li>
+                <li><a href="products.php">Books</a></li>
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
                 <!--Icon button that links to user's cart-->
-                <li>
+                <li class="active">
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <!--User Icon button dropdown button to log in/out and suer profile pages-->

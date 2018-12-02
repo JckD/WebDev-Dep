@@ -16,8 +16,7 @@
     //display session variable if it is set
     if(isset($_SESSION["user"])){
         echo $_SESSION["user"];
-        $user = $_SESSION["user"];
-        
+        $user = $_SESSION["user"];      
     }
 ?>
 
@@ -50,7 +49,7 @@
                     <!--Home button that links to the home page-->
                     <li><a href="index.php"> Home </a></li>
                     <!-- Books button that links to products.php-->
-                    <li><a href="products.php">Books</a></li>
+                    <li class="active"><a href="products.php">Books</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -59,10 +58,10 @@
                         <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                     </li>
                     <!-- User Icon dropdown button to log in/out and user profile pages-->
-                    <li class="active dropdown">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                         <ul class="dropdown-menu">
-                            <li class="active"><a href="profile.php"> My Profile </a></li>
+                            <li><a href="profile.php"> My Profile </a></li>
                             <li><a href="editprofile.php"> Edit Profile </a></li>
                             <li><a href="logout.php"> Logout </a></li>
                         </ul>

@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<!--
+    Web developement and deployment
+    Group Assignment
+    Jack Doyle | Casey Ogbevoen
+    Home Page of The Book Shop
+-->
+<?php 
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
+?>
 
 <?php
     error_reporting(E_ERROR | E_PARSE);
@@ -200,10 +213,10 @@
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="active dropdown">
-                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="profile.php"> My Profile </a></li>
-                        <li class="active"><a href="editprofile.php"> Edit Profile </a></li>
+                        <li class="active"><a href="profile.php"> My Profile </a></li>
+                        <li><a href="login.php"> Log In</a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </li>

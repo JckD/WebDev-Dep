@@ -2,10 +2,17 @@
 <!--
     Web developement and deployment
     Group Assignment
-    Jack Doyle | Casey Ogbovoen
-    order.php
-    Page that deletes the user's account
+    Jack Doyle | Casey Ogbevoen
+    Home Page of The Book Shop
 -->
+<?php 
+    session_start();
+    //display session variable if it is set
+    if(isset($_SESSION["user"])){
+        echo $_SESSION["user"];
+    }
+?>
+
 <?php
     //initialise variables to empty strings
     $password1 = $password2 = "";
@@ -144,8 +151,7 @@
                 <li class="active dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="profile.php"> My Profile </a></li>
-                        <li class="active"><a href="validatepassword.php"> Edit Profile </a></li>
+                        <li class="active"><a href="profile.php"> My Profile </a></li>
                         <li><a href="login.php"> Log In</a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>

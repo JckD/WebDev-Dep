@@ -19,6 +19,8 @@
         $errors = array();
         
         if(isset($_POST["submit"])){
+            //prepare statement for sql insertion
+            $sql = $con->prepare("INSERT INTO user (username, email, address, password, image) VALUES (?, ?, ?, ?, ?)");
             
             //if any field is empty
             if (empty($_POST["username"])) {
@@ -85,17 +87,23 @@
             }
 
             if(!$errors){
+                //$sql = $con->prepare("INSERT INTO user (username, email, address, password, image) VALUES ('$username', '$email', '$address', '$password', 'uploads/user.jpg')");
                 
                 //encrypt the password
                 $password = password_hash($password1, PASSWORD_DEFAULT);
                 
-                //insert data into database
-                $sql = "INSERT INTO user (username, email, address, password, image) VALUES ('$username', '$email', '$address', '$password', 'uploads/user.jpg')";
-
-                mysqli_query($con, $sql);
+                //initialise image
+                $image = "uploads/user.jpg";
+                
+                //insert data into database    
+                $sql->bind_param("sssss", $username, $email, $address, $password, $image);
+                $sql->execute();
                 
                 //set username as session variable
                 $_SESSION["user"] = $username;
+                
+                //close connection
+                $sql->close();
                 
                 //view user profile
                 header("location: profile.php");
@@ -218,19 +226,21 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                <!--Icon button that links to user's cart-->
                  <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="active dropdown">
-                    <a href="#" class="active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
+                    <!-- User Icon button dropdown button to log in/out and user porfile pages-->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="profile.php"> My Profile </a></li>
-                        <li><a href="login.php"> Log In</a></li>
+                        <li class="active"><a href="login.php"> Log In</a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div><!--Close Nav bar div-->
             
 		<!-- Library Image -->
 		<img style="height:20%;width:100%" src="library2crop.jpg"/>
