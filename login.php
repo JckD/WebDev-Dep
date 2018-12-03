@@ -6,6 +6,9 @@
     Login Page of The Book Shop
 -->
 <?php
+    //prevents unhelpful error reporting
+    error_reporting(E_ERROR | E_PARSE);
+
     //initialise variables to empty strings
     $username = $password = "";
         
@@ -33,6 +36,7 @@
                 array_push($errors, "*Password is required.");
             }
             
+            //function to strip data
             function test_input($data) {
               $data = trim($data);
               $data = stripslashes($data);
@@ -43,6 +47,16 @@
             //get data from form
             $username = test_input($_POST["username"]);
             $password = test_input($_POST["password"]);
+            
+            //ensure only valid data is entered
+            //username - only letters and white space
+            if (!preg_match("/^[a-zA-Z0-9_,' ]*$/", $username)) {
+              array_push($errors, "*Only alphanumeric characters allowed in the Username field."); 
+            }
+            //password - only letters numbers and underscores
+            if (!preg_match("/^[a-zA-Z0-9_,' ]*$/", $password)) {
+              array_push($errors, "*Only alphanumeric characters are allowed in the Password field."); 
+            }
             
             if(!$errors){
                 //get row from database

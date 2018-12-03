@@ -9,9 +9,7 @@
 -->
 <?php 
     //start session
-    session_start();
-    $user = $_SESSION["user"];      
-
+    session_start();     
 ?>
 
 <html lang="en">
@@ -86,6 +84,8 @@
 
 
                     //PHP that adds a book to the user's cart
+                    //set session varable as user
+                    $user = $_SESSION["user"]; 
 
                     //connect to the database
                     $con = mysqli_connect("localhost","root","","dt211");

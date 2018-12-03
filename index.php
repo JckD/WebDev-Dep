@@ -30,6 +30,17 @@
 <title> The Book Shop </title>
     
     <body >
+        <!-- Jquery animation script - Toggles images on page -->
+        <script>
+            $(document).ready(function(){
+                $("h1").click(function(){
+                    $("img").animate({
+                        height: 'toggle'
+                    });
+                });
+            });
+        </script>
+        
         <h1> The Book Shop </h1>
         
         <!-- Header - to navigate the site -->
@@ -69,7 +80,7 @@
             </div><!--Close Nav bar div-->
 
             <!-- Library Image -->
-            <img style="height:20%;width:100%" src="library2crop.jpg"/>
+            <img iid="img" style="height:20%;width:100%" src="library2crop.jpg"/>
         </nav>
         <br>
         
@@ -84,6 +95,12 @@
         
 
         <script>
+            /***************************************************************************************
+            *    Title: Typing Carousel
+            *    Author: Jake Rocheleau
+            *    Date: June 10th, 2018
+            *    Availability: https://speckyboy.com/css-javascript-text-animation-snippets/
+            ***************************************************************************************/
             var TxtRotate = function(el, toRotate, period) {
                 this.toRotate = toRotate;
                 this.el = el;
@@ -141,8 +158,7 @@
                 css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
                 document.body.appendChild(css);
             };
-            
-           
+            /**************************************************************************************/
         </script>
         <br>
             
@@ -163,7 +179,7 @@
         </form>
 
         <br/>
-            <!-- Top Picks Div-->
+             <!-- Top Picks Div-->
             <div style="padding-bottom: 20%;">
                 <div style="text-alignt: left"><h3>Top Picks:</h3></div>
                 <div style="padding-bottom: 20%">
@@ -173,27 +189,14 @@
                     </div>
                     <div style="width: 30%; float: left">
                         <a href='One%20Direction%20Where%20We%20Are.php'><img style='width:70%' src='One%20Direction%20Where%20We%20Are.jpg'> </a>
-                        <h4 style="margin-left: 0%">One Direction: Where we are now</h4>
+                        <h4 style="margin-left: 0%">One Direction: Where we are Now</h4>
                     </div>
                     <div style="width: 30%; float: left">
                         <a href='Detective%20Comics%2027.php'><img style='width:65%' src='Detective%20Comics%2027.jpg'> </a>
                         <h4 style="margin-left: 10%">Detective Comis #27</h4>
                     </div>
                 </div>
-
-
             </div>
         </div>
-        
-
-        <!-- Footer -->
-        <br/>
-       
     </body>
-     <div class="footer elegant-dark">
-          <!--  <p style="color:white">
-                Address: 146 Allamy Street <br/>
-                Contact Us: 01 2108 9952 <br/>
-            </p>-->
-        </div>
 </html>

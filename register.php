@@ -24,8 +24,6 @@
         $errors = array();
         
         if(isset($_POST["submit"])){
-            //prepare statement for sql insertion
-            $sql = $con->prepare("INSERT INTO user (username, email, address, password, image) VALUES (?, ?, ?, ?, ?)");
             
             //if any field is empty
             if (empty($_POST["username"])) {
@@ -92,26 +90,23 @@
             }
 
             if(!$errors){
-                //$sql = $con->prepare("INSERT INTO user (username, email, address, password, image) VALUES ('$username', '$email', '$address', '$password', 'uploads/user.jpg')");
-                
                 //encrypt the password
                 $password = password_hash($password1, PASSWORD_DEFAULT);
                 
-                //initialise image
-                $image = "uploads/user.jpg";
-                
-                //insert data into database    
-                $sql->bind_param("sssss", $username, $email, $address, $password, $image);
-                $sql->execute();
-                
-                //set username as session variable
-                $_SESSION["user"] = $username;
-                
-                //close connection
-                $sql->close();
-                
-                //view user profile
-                header("location: profile.php");
+                //insert data into database
+                $sql = "INSERT INTO user (username, email, address, password, image) VALUES ('$username', '$email', '$address', '$password', 'uploads/user.jpg')";
+
+                if(mysqli_query($con, $sql)){
+                    //set username as session variable
+                    $_SESSION["user"] = $username;
+                    
+                    echo "Registration Successful";
+                    //view user profile
+                    header("location: profile.php");
+                }
+                else{
+                    array_push($errors, "This Username has already been taken.");
+                }
             }
         }
     }

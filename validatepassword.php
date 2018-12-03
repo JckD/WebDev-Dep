@@ -6,6 +6,9 @@
     Password Validation Page Before User can alter Account Information
 -->
 <?php
+    //prevents unhelpful error reporting
+    error_reporting(E_ERROR | E_PARSE);
+
     //start session
     session_start();
 

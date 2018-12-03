@@ -94,7 +94,7 @@
 
                 while($row = $result->fetch_assoc()){
                     echo "<h2 style='padding-right:30%'> My Profile </h2>";
-                    echo "<img style='height: 300px; width: 300px' class='img-circle' src='" . "$row[image]" . "'/><br><br>";
+                    echo "<img id='img1' style='height: 300px; width: 300px' class='img-circle' src='" . "$row[image]" . "'/><br><br>";
                     echo "<h4> Username: " . "$row[username]" . "</h4><br>";
                     echo "<h4> Email: " . "$row[email]" . "<h4><br>";
                     echo "<h4> Address: " . "$row[address]" . "<h4><br>";
