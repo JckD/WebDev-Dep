@@ -85,13 +85,10 @@
                         mysqli_query($con, $sql);
                     }
                 }
-                if(!empty($_POST["address1"])){
+                if(!empty($_POST["address"])){
                     //update address
-                    $address1 = test_input($_POST["address1"]);
-                    $address2 = test_input($_POST["address2"]);
-                    //concatonate address line 1 and line 2
-                    $address = $address1 . ", " . $address2;
-                    
+                    $address = test_input($_POST["address"]);
+
                     //address - allow alphanumeric characters
                     if (!preg_match("/^[a-zA-Z0-9_, ]*$/",$address)) {
                       array_push($errors, "*Only alphanumeric characters allowed in the Address fields."); 

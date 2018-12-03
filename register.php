@@ -184,7 +184,7 @@
         
     <h2> Create an Account </h2>
     <br>
-        <form novalidate id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+        <form id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
             
             <div class="form-group" style="padding-bottom:3%">
                 <label for="username"> Username: </label>
