@@ -7,12 +7,9 @@
     Web page that displays information
     about the product: To Kill a Mockingbird
 -->
-<?php 
+<?php
+    //start session
     session_start();
-    //display session variable if it is set
-    if(isset($_SESSION["user"])){
-        echo $_SESSION["user"];
-    }
 ?>
 
 <html>

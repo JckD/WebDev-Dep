@@ -3,8 +3,7 @@
     Web developement and deployment
     Group Assignment
     Jack Doyle | Casey Ogbovoen
-    login.php
-    page that lets user log in
+    Login Page of The Book Shop
 -->
 <?php
     //initialise variables to empty strings
@@ -72,43 +71,6 @@
     }
 ?>
 
-<script>
-	function checkForm(){
-        //Ensure username field isn't empty
-		var username = document.getElementById("username");
-        var password = document.getElementById("password");
-        
-        //ensure required fields are not left empty
-		if(username == null || username == ""){
-			alert("Please enter a Username!");
-			return false;
-		}
-        if(password == null || password == ""){
-			alert("Please enter a Password!");
-			return false;
-		}
-        
-        //ensure only alphanumeric characters in data fields
-        var AlphaNum = /^[a-zA-Z0-9_,' ]*$/;
-        
-        function validate(input){
-            if(input.value.match(AlphaNum)){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        
-        if(validate(username) == false){
-            document.getElementById("username-error").innerHTML = "*Invalid Characters in Username field.";
-        }
-        if(validate(password) == false){
-            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
-        }
-	}//end checkForm()
-</script>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -143,6 +105,15 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                </li>
                 <!--Icon that links to the user's cart-->
                  <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
@@ -174,17 +145,15 @@
         
 	<h2> Log In </h2>
     <br>
-		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return checkForm();">
+		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 			<div class="form-group">
 				<label for="username"> Username: </label>
 				<input type="text" class="form-control" placeholder="Enter Username" id="username" name="username" value="<?php echo $username ?>" required>
-                <span id="username-error" style="color: red"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="password"> Password: </label>
 				<input type="password" class="form-control" placeholder="Enter Password" id="password" name="password" value="<?php echo $password ?>" required>
-                <span id="password-error" style="color: red"></span>
 			</div>
 
 			<br>

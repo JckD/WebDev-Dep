@@ -51,6 +51,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                    </li>
                     <!-- Icon button that links to the user's cart-->
                      <li>
                         <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>

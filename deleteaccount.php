@@ -3,16 +3,8 @@
     Web developement and deployment
     Group Assignment
     Jack Doyle | Casey Ogbevoen
-    Home Page of The Book Shop
+    Verifies User Password to allow Account Deletion
 -->
-<?php 
-    session_start();
-    //display session variable if it is set
-    if(isset($_SESSION["user"])){
-        echo $_SESSION["user"];
-    }
-?>
-
 <?php
     //initialise variables to empty strings
     $password1 = $password2 = "";
@@ -90,30 +82,6 @@
     }
 ?>
 
-<script>
-	function checkForm(){
-        //Ensure username field isn't empty
-        var password1 = document.getElementById("password1");
-		var password2 = document.getElementById("password2");
-        
-		//Ensure username field isn't empty
-		if(password1 == null || password1 == ""){
-			alert("Please enter a Password!");
-			return false;
-		}
-		if(password2 == null || password2 == ""){
-			alert("Plese confirm your Password!");
-			return false;
-		}
-        
-        //ensure passwords match
-		if(!password1.equals(password2)){
-			alert("Passwords do not match!");
-			return false;
-		}
-	}//end checkForm()
-</script>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -145,7 +113,16 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                 <li>
+                <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                </li>
+                <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="active dropdown">
@@ -173,7 +150,7 @@
         ?>
         
 		<h2> Confirm your Password </h2>
-		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return checkForm();">
+		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 			<div class="form-group">
                 <label for="password1"> Password: </label>
                 <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" required>
@@ -183,9 +160,7 @@
                 <label for="password2"> Confirm Password: </label>
                 <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
             </div>
-
 			<br>
-			<!--<button type="submit" class="btn btn-dark" name="submit"> Confirm </button>-->
             
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">

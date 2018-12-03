@@ -3,17 +3,10 @@
     Web developement and deployment
     Group Assignment
     Jack Doyle | Casey Ogbevoen
-    Home Page of The Book Shop
+    Page that allows User to Update Personal Information
 -->
-<?php 
-    session_start();
-    //display session variable if it is set
-    if(isset($_SESSION["user"])){
-        echo $_SESSION["user"];
-    }
-?>
-
 <?php
+    //prevents unhelpful error reporting
     error_reporting(E_ERROR | E_PARSE);
     
     //start session
@@ -138,45 +131,6 @@
     }
 ?>
 
-<script>
-	function checkForm(){
-        //Ensure username field isn't empty
-		var username = document.getElementById("username");
-        var email = document.getElementById("email");
-        var address = document.getElementById("address");
-        var password1 = document.getElementById("password1");
-		var password2 = document.getElementById("password2");
-        
-        //ensure required fields are not left empty
-		if(username == null || username == ""){
-			alert("Please enter a Username!");
-			return false;
-		}
-		if(email == null || email == ""){
-			alert("Please enter an Email Address!");
-			return false;
-		}
-		if(address == null || address1 == ""){
-			alert("Please enter a Shipping Address!");
-			return false;
-		}
-		if(password1 == null || password1 == ""){
-			alert("Please enter a Password!");
-			return false;
-		}
-		if(password2 == null || password2 == ""){
-			alert("Plese confirm your Password!");
-			return false;
-		}
-        
-        //ensure passwords match
-		if(!password1.equals(password2)){
-			alert("Passwords do not match!");
-			return false;
-		}
-	}//end checkForm()
-</script>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -209,7 +163,16 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                 <li>
+                <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                </li>
+                <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="active dropdown">
@@ -250,23 +213,20 @@
                 }
             }
         ?>
-        <form id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" onsubmit="return checkForm();">
+        <form id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
             <div class="form-group" style="padding-bottom:3%">
                 <label for="username"> Username: </label>
                 <input type="text" class="form-control" value="<?php echo $username; ?>" id="username" name="username">
-                <span id="username-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
                 <label for="email"> E-mail: </label>
                 <input type="email" class="form-control" value="<?php echo $email; ?>" id="email" name="email">
-                <span id="email-error" style="color: red"></span>
             </div>
 
             <div class="form-group">
                 <label for="address"> Shipping Address: </label>
                 <input type="text" class="form-control" value="<?php echo $address; ?>" id="address" name="address">
-                <span id="address-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
@@ -277,7 +237,6 @@
             <div class="form-group">
                 <label for="password2"> Confirm Password: </label>
                 <input type="password" class="form-control" placeholder="Confirm New Password" id="password2" name="password2">
-                <span id="password-error" style="color: red"></span>
             </div>
 
             <br/>

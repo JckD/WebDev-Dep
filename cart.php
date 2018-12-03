@@ -10,11 +10,7 @@
 <?php 
     //Start session
     session_start();
-    //display session variable if it is set
-    if(isset($_SESSION["user"])){
-        echo $_SESSION["user"];
-        $user = $_SESSION["user"];
-    }
+    $user = $_SESSION["user"];
 ?>
 
 <html lang="en">
@@ -53,6 +49,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                    </li>
                     <!--Icon Button that links to user's cart-->
                     <li class="active">
                         <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>

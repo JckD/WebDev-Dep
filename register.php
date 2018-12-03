@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-
+<!--
+    Web developement and deployment
+    Group Assignment
+    Jack Doyle | Casey Ogbevoen
+    Registration Page of The Book Shop
+-->
 <?php
     //initialise variables to empty strings
     $username = $email = $address1 = $address2 = $password1 = $password2 = "";
@@ -112,88 +117,6 @@
     }
 ?>
 
-<script>
-	function checkForm(){
-		//Ensure username field isn't empty
-		var username = document.getElementById("username");
-        var email = document.getElementById("email");
-        var address1 = document.getElementById("address1");
-        var address2 = document.getElementById("address2");
-        var password1 = document.getElementById("password1");
-		var password2 = document.getElementById("password2");
-        
-        //ensure required fields are not left empty
-		if(username == null || username == ""){
-			alert("Please enter a Username!");
-			return false;
-		}
-		if(email == null || email == ""){
-			alert("Please enter an Email Address!");
-			return false;
-		}
-		if(address1 == null || address1 == ""){
-			alert("Please enter a Shipping Address!");
-			return false;
-		}
-		if(password1 == null || password1 == ""){
-			alert("Please enter a Password!");
-			return false;
-		}
-		if(password2 == null || password2 == ""){
-			alert("Plese confirm your Password!");
-			return false;
-		}
-        
-        //ensure valid email format 
-        atpos = email.indexOf("@");
-        dotpos = email.lastIndexOf(".");
-         
-        if (atpos < 1 || ( dotpos - atpos < 2 )) {
-            alert("Invalid Email Format, Please try again.")
-            return false;
-        }
-        
-        //ensure password is greater than 8 characters
-        if(password1.length < 8){
-            document.getElementById("password-error").innerHTML = "Password length must be at least 8 characters.";
-        }
-        
-		//ensure passwords match
-		if(!password1.equals(password2)){
-			alert("Passwords do not match!");
-			return false;
-		}
-        
-        //ensure only alphanumeric characters in data fields
-        var AlphaNum = /^[a-zA-Z0-9_,' ]*$/;
-        
-        function validate(input){
-            if(input.value.match(AlphaNum)){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        
-        if(validate(username) == false){
-            document.getElementById("username-error").innerHTML = "*Invalid Characters in Username field.";
-        }
-        if(validate(address1) == false){
-            document.getElementById("address-error").innerHTML = "*Invalid Characters in Address fields.";
-        }
-        if(validate(address2) == false){
-            document.getElementById("address-error").innerHTML = "*Invalid Characters in Address fields.";
-        }
-        if(validate(password1) == false){
-            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
-        }
-        if(validate(password2) == false){
-            document.getElementById("password-error").innerHTML = "*Invalid Characters in Password field.";
-        }
-	}//end checkForm()
-</script>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -226,6 +149,15 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                </li>
                 <!--Icon button that links to user's cart-->
                  <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
@@ -257,18 +189,16 @@
         
     <h2> Create an Account </h2>
     <br>
-        <form novalidate id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" onsubmit="return checkForm();">
+        <form novalidate id= "form" style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
             
             <div class="form-group" style="padding-bottom:3%">
                 <label for="username"> Username: </label>
                 <input type="text" class="form-control" placeholder="Enter your Username" id="username" name="username" value="<?php echo $username; ?>" required>
-                <span id="username-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
                 <label for="email"> E-mail: </label>
                 <input type="email" class="form-control" placeholder="Enter E-mail Address" id="email" name="email" value="<?php echo $email; ?>" required>
-                <span id="email-error" style="color: red"></span>
             </div>
 
             <div class="form-group">
@@ -278,7 +208,6 @@
 
             <div style="padding-bottom:3%">
                 <input type="text" class="form-control" placeholder="Shipping Address Line 2" id="address2" name="address2" value="<?php echo $address2; ?>">
-                <span id="address-error" style="color: red"></span>
             </div>
 
             <div class="form-group" style="padding-bottom:3%">
@@ -289,7 +218,6 @@
             <div class="form-group">
                 <label for="password2"> Confirm Password: </label>
                 <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
-                <span id="password-error" style="color: red"></span>
             </div>
 
             <br/>

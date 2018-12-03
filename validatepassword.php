@@ -3,17 +3,12 @@
     Web developement and deployment
     Group Assignment
     Jack Doyle | Casey Ogbevoen
-    Home Page of The Book Shop
+    Password Validation Page Before User can alter Account Information
 -->
-<?php 
-    session_start();
-    //display session variable if it is set
-    if(isset($_SESSION["user"])){
-        echo $_SESSION["user"];
-    }
-?>
-
 <?php
+    //start session
+    session_start();
+
     //initialise variables to empty strings
     $password1 = $password2 = "";
 
@@ -79,24 +74,6 @@
     }
 ?>
 
-<script>
-	function checkForm(){
-		//Ensure username field isn't empty
-		var password1 = document.getElementById("password1");
-		if(password1 == null || password1 == ""){
-			alert("Please enter your Password.");
-			return false;
-		}
-
-		//ensure password was entered
-		var password2 = document.getElementById("password2");
-		if(password2 == null || password2 == ""){
-			alert("Please enter your Password.");
-			return false;
-		}
-	}//end checkForm()
-</script>
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -129,7 +106,16 @@
             </ul>
                 
             <ul class="nav navbar-nav navbar-right">
-                 <li>
+                <li>
+                    <!-- Display profile picture adn link to profile page if user is logged in -->
+                    <div><a href="profile.php">
+                            <?php
+                                include("userloggedin.php");
+                            ?>
+                        </a>
+                    </div>
+                </li>
+                <li>
                     <a href="cart.php" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </li>
                 <li class="active dropdown">
@@ -157,7 +143,7 @@
         ?>
         
 		<h2> Confirm your Password </h2>
-		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return checkForm();">
+		<form style="padding-left:5%" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 			<div class="form-group">
                 <label for="password1"> Password: </label>
                 <input type="password" class="form-control" placeholder="Enter Password" id="password1" name="password1" value="<?php echo $password1 ?>" required>
