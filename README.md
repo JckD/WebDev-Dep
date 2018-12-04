@@ -19,7 +19,7 @@ Steps to deploy the web application:
 2.	Import “dt211.sql” into php my admin.
 3.	Place the bookshop folder into the xampp/htdocs folder on your local machine.
 4.	Start the “Apache” and “MySQL” service in the XAMPP Control Panel.
-5.  If you are downloading this from GIT hub you must create a folder called uploads as GIT hub does not support this.
-6.	Type http://localhost/bookShop/index.php into your browser search bar.
+5. If you are downloading this from GIT hub you must create a folder called uploads and move the user.jpg file into it.
+6.	Type http://localhost/WebDev-Dep-master/ into your browser search bar.
 7.	Traverse the web application from the “index.php” home page.
  
